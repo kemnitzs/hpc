@@ -25,5 +25,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="horizontal"
 
 set encoding=utf-8
+" fixes error with backspace key in vim-8.0 
+set bs=2
 
 syntax on
