@@ -1,1 +1,8 @@
 export LANG=en_US.UTF-8
+
+alias ls='ls -lh --color=auto'
+
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+alias myqueue='squeue --user=<your-username>'
