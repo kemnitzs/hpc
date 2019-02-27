@@ -1,8 +1,14 @@
 #!/bin/bash
+rm -rf ~/.vimrc
+rm -rf ~/.vim
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 cp vimrc $HOME/.vimrc
+
+module load gcc/8.2.0
+export CC=gcc 
+export CXX=g++
 
 cd $HOME/.vim/bundle 
 git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git 
