@@ -7,8 +7,11 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 cp vimrc $HOME/.vimrc
 
 module load gcc/8.2.0
+module load cmake/3.4.3
 export CC=gcc 
 export CXX=g++
+export VERBOSE=1 
+
 
 cd $HOME/.vim/bundle 
 git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git 
@@ -20,6 +23,5 @@ git clone --depth=1 https://github.com/ervandew/supertab.git
  
 cd $HOME/.vim/bundle/YouCompleteMe/ 
 git submodule update --init --recursive 
-./install.py 
-
+./install.py --clangd-completer
 
