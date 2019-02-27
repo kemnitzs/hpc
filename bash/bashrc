@@ -1,3 +1,15 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+
 export LANG=en_US.UTF-8
 
 alias ls='ls -lh --color=auto'
@@ -6,3 +18,5 @@ bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
 alias myqueue='squeue --user=<your-username>'
+
+module load vim/8.0 gcc/8.2.0
