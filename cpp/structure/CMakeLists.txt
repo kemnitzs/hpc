@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
-PROJECT(uniform_real_distribution)
+PROJECT(structures)
 
 SET( CMAKE_BUILD_TYPE DEBUG )
 
@@ -14,9 +14,8 @@ SET( CMAKE_CXX_STANDARD 14 )
 
 SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
-ADD_EXECUTABLE(bin_uniform_real_distribution main.cpp)
-ADD_EXECUTABLE(bin_vector_fill vector_fill.cpp)
+ADD_EXECUTABLE(bin_structures main.cpp)
 
-#TARGET_INCLUDE_DIRECTORIES( bin_uniform_real_distribution )
-#TARGET_LINK_LIBRARIES( bin_uniform_real_distribution )
+#TARGET_INCLUDE_DIRECTORIES( bin_structures )
+#TARGET_LINK_LIBRARIES( bin_structures )
 
