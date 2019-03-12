@@ -2,10 +2,10 @@
 
 int main(int argc, char** argv){
   int a = 0 ;
+  int b = a / 10;
 
-  std::vector<double> v(100,0);
-
-  v[-1] = 10;
+  int c;
+  int d = c * 10;
 
   return 0;
 }
