@@ -5,6 +5,7 @@
 //summary.h
 #ifndef SUMMARY_H
 #define SUMMARY_H
+
 class Summary{
   std::vector<double>& pX; 
   
