@@ -1,19 +1,20 @@
 ///////////////////////////////////////////////////////////////////////
+#include <vector>
+#include <array>
+
 //summary.h
 #ifndef SUMMARY_H
 #define SUMMARY_H
 class Summary{
-  int n;//sample size and number of variables
-  double* pX;//pointer to data array
+  std::vector<double>& pX; 
   
 public:
-  Summary(){pX = 0;}
-  Summary(int N, double* pData){
-    n = N;
-    pX = pData;
+  Summary(std::vector<double>& pData): 
+    pX(pData)
+  {
   }	
-  ~Summary(){delete[] pX;};//destructor
-  void west(double* stat);
+  void west(std::array<double,2>& stat);
+
 };
 #endif
 
