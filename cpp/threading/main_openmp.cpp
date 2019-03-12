@@ -6,6 +6,7 @@ struct Simulation {
     void run(){
       // TODO add long running code here
       int my_tid = omp_get_thread_num();
+#pragma omp critical
       std::cout << "my tid " << my_tid << std::endl;
     }   
 };
