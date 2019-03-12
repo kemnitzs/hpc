@@ -1,7 +1,11 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
-PROJECT(ProjectName)
+PROJECT(anova)
 
 SET( CMAKE_BUILD_TYPE DEBUG )
+
+FIND_PACKAGE( MPI REQUIRED )
+
+
 
 SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS} -march=native" )
 SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic -D_GLIBCXX_DEBUG -fsanitize=address" )
@@ -14,8 +18,13 @@ SET( CMAKE_CXX_STANDARD 14 )
 
 SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
-ADD_EXECUTABLE(bin_ProjectName main.cpp)
+ADD_EXECUTABLE(bin_anova main.cpp summary.cpp)
 
-#TARGET_INCLUDE_DIRECTORIES( bin_ProjectName )
-#TARGET_LINK_LIBRARIES( bin_ProjectName )
+IF( MPI_FOUND )
+  target_include_directories(bin_anova PRIVATE ${MPI_INCLUDE_PATH})
+  target_link_libraries(bin_anova ${MPI_LIBRARIES})
+ENDIF()
+
+#TARGET_INCLUDE_DIRECTORIES( bin_anova )
+#TARGET_LINK_LIBRARIES( bin_anova )
 
