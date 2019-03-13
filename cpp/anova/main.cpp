@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include "mpi.h"
+#include <cmath>
+#include <sstream>
 #include "summary.h"
 
 using std::cout;
@@ -30,20 +32,42 @@ int main(int argc, char** argv) {
     ifstream fIn(argv[2]);
     for (int j = 0; j < number_of_processors; j++) {
       pData[j].resize(values_per_line);
+      std::string line;
+      getline( fIn, line );
+      std::stringstream sstr(line);
       for (int i = 0; i < values_per_line; i++) {
-	fIn >> pData[j][i];
+	sstr >> pData[j][i];
       }
     }
 
     fIn.close();
 
     // send data to all other processors
-    for (int i = 1; i < pData.size(); i++) {
+    for (int i = 1; i < number_of_processors; i++) {
+      for( auto& e : pData[i] ){
+	std::cout << e << " ";
+      }
+      std::cout << std::endl;
       MPI_Send(pData[i].data(), pData[i].size(), MPI_DOUBLE, i, 0,
 	       MPI_COMM_WORLD);
     }
     Summary mySummary(pData[0]);
-
+    double sum = 0 ;
+    for( auto& e : pData[0] ){
+      sum += e;
+    }
+    sum /= pData[0].size();
+    double vsum = 0;
+    for( auto& e : pData[0] ){
+      vsum += pow(e - sum,2);
+    }
+    double rsq = (1.0 / (pData[0].size())) * vsum; 
+    vsum = (1.0 / (pData[0].size()-1)) * vsum;
+    
+    std::cout << "sum " << sum  << std::endl;
+    std::cout << "vsum " << vsum << std::endl;
+    std::cout << "rsq " << rsq << std::endl;
+    
     mySummary.west(stat);
     cout << "For processor " << my_rank << " the mean and variance are "
 	 << stat[0] << " and " << stat[1] << endl;
@@ -75,8 +99,27 @@ int main(int argc, char** argv) {
     std::vector<double> mypData(values_per_line);
     MPI_Status status;
     MPI_Recv(mypData.data(), mypData.size(), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD,&status);
+    for( auto& e : mypData ){
+      std::cout << e << " ";
+    }
+    std::cout << std::endl;
+
     Summary mySummary(mypData);
     mySummary.west(stat);
+    double sum = 0 ;
+    for( auto& e : mypData ){
+      sum += e;
+    }
+    sum /= mypData.size();
+    double vsum = 0;
+    for( auto& e : mypData ){
+      vsum += pow(e - sum,2);
+    }
+    vsum = (1.0 / (mypData.size()-1)) * vsum;
+    
+    std::cout << "sum " << sum  << std::endl;
+    std::cout << "vsum " << vsum << std::endl;
+    
     cout << "For processor " << my_rank << " the mean and variance are "
 	 << stat[0] << " and " << stat[1] << endl;
     MPI_Send(stat.data(), stat.size(), MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
