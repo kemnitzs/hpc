@@ -5,6 +5,7 @@ SET( CMAKE_BUILD_TYPE DEBUG )
 option( USE_ADDRESS_SANITIZER on)
 option( USE_LIBRARY_ACCESS_CHECK off)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/backward-cpp)
 
 SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS} -march=native" )
 
@@ -25,7 +26,8 @@ SET( CMAKE_CXX_STANDARD 14 )
 
 SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
-ADD_EXECUTABLE(bin_run_time_error main.cpp)
+ADD_EXECUTABLE(bin_run_time_error main.cpp ${BACKWARD_ENABLE})
+add_backward(bin_run_time_error)
 
 #TARGET_INCLUDE_DIRECTORIES( bin_run_time_error )
 #TARGET_LINK_LIBRARIES( bin_run_time_error )
