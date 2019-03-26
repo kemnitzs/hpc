@@ -1,16 +1,18 @@
 #include <vector>
+#include <iostream>
 
 using namespace std ;
 
 int main(){
-  vector<double> a(1000);
-  vector<double> b(1000);
-  vector<double> c(1000);
-  vector<double> d(1000);
+  int N = 1'000'000;
+  vector<double> a(N);
+  vector<double> b(N);
+  vector<double> c(N);
+  vector<double> d(N);
 
-  int NITER = 10000;
-  int N = a.size();
+  int NITER = 100'000;
 
+  std::cout << "memory used " << 4.0* N * sizeof(double)/1024/1024 << " MB" << std::endl;
 
   for(int r=0; r<NITER; ++r) {
     #pragma omp parallel for

@@ -99,7 +99,7 @@ JacobiData::JacobiData(){
         alpha     = 0.8;
         relax     = 1.0;
         tolerance = 1e-12;
-        max_iterations   = 2;
+        max_iterations   = 200;
 
 #elif defined DATA_SMALL
         n_cols      = 200;
@@ -118,6 +118,7 @@ JacobiData::JacobiData(){
                tolerance, max_iterations);
 
 
+        max_iterations   = 200;
     /* MPI values, set to defaults to avoid data inconsistency */
     my_rank   = 0;
     n_processes = 1;
