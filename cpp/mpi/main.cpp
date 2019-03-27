@@ -1,7 +1,7 @@
 #include <boost/mpi.hpp>
 #include <iostream>
 #include <string>
-#include <boost/serialization/string.hpp>
+#include <boost/serialization/vector.hpp>
 namespace mpi = boost::mpi;
 
 int main()
@@ -9,17 +9,17 @@ int main()
   mpi::environment env;
   mpi::communicator world;
 
+  // create a vector that holds 4GB of data 
+  std::vector<double> large;
+
   if (world.rank() == 0) {
-    world.send(1, 0, std::string("Hello"));
-    std::string msg;
-    world.recv(1, 1, msg);
-    std::cout << msg << "!" << std::endl;
+    large.resize(4l*1024l*1024l*1024l/sizeof(double));
+    world.send(1, 0, large);
+    large.resize(0);
+    large.shrink_to_fit();
   } else {
-    std::string msg;
-    world.recv(0, 0, msg);
-    std::cout << msg << ", ";
-    std::cout.flush();
-    world.send(0, 1, std::string("world"));
+    world.recv(0, 0, large);
+    std::cout << "large hold " << large.size()*sizeof(double)/1024/1024/1024 << " GB" << std::endl;
   }
 
   return 0;
